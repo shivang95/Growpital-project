@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Growpital</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+.modal-dialog {
+    max-width: 400px;
+}
+
+.modal-content{
+background-color:#2a2d3c;
+color:white;
+}
+.modal-content p{
+color:#c3c3c3;
+margin: 0px;
+font-size:12px
+}
+.modal-content h4{
+font-weight:bold;
+}
+.transaction_success{
+background-color:#3d5a47;
+padding: 10px 20px;
+border-radius:5px;
+}
+.transaction_success h4{
+margin:4px 0px;
+}
+.transaction_success p{
+color:#abafc4;
+}
+.fa.fa-check-circle-o{
+color:#74de67;
+float: left;
+margin-right: 12px
+}
+.details {
+    border: 1px solid #777;
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 10px;
+}
+.details h5{
+color:#febf32;
+}
+ .from h5{
+ margin-top:0px;
+}
+.to {
+    margin-top: 25px;
+}
+
+.method {
+    margin-top: 30px;
+}
+.details h4{
+margin-bottom:0px;
+}
+.details p b{
+color:#fff;
+}
+.modal-header {
+    border: none;
+	padding-bottom:0px;
+}
+
+.modal-footer {
+    border: none;
+	text-align:center;
+	padding-bottom:20px;
+	padding-top:5px
+}
+.help_button{
+  background-color:#febf32;
+  color:#000;
+  
+}
+.share{
+background-color:#242632;
+color:#abafc4;
+
+}
+.modal-footer button{
+width:120px;
+border:none;
+padding:10px;
+}
+button.close {
+    color:white;
+    opacity:0.7;
+}
+button.close:hover{
+    opacity:1;
+	color:white;
+}
+.white{
+color:#ffffff !important;
+}
+
+
+
+</style>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Growpital</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="#">Home</a></li>
+      <li><a href="#">About</a></li>
+	  <li><a href="#">Service</a></li>
+      <li><a href="#">Contact Us</a></li>
+    </ul>
+  </div>
+</nav>
+  
+
+<div class="container">
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Transaction History</button>
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+		  <p>Money added to wallet</p>
+		  <p>from bank account</p>
+		   
+          <h4 class="modal-title"><i class="fa fa-rupee"></i><span id='transactionamount'>15,000</span></h4>
+		  <p id='date_top'>12 Aug 2022,03:55pm</span></p>
+        </div>
+        <div class="modal-body">
+		<div class="transaction_success">
+		<i class="fa fa-check-circle-o" style="font-size:36px"></i>
+		<h4>Transcation Complete!</h4>
+		<p>Tap to view this transaction</p>
+		</div>
+          <div class="details">
+		  <div class="from">
+		  <h5>From</h5>
+		  <h4 id='from_name'>Saurabh Sharma</h4>
+		  <p class='white'><i><span id='bank_from'>SBI</span>,IFSC <span id='ifsc_from'>SBIN016095</span></i><p>
+		  <p class='white'><i>A/c No.<span id='acc_no'>XXXXXXXXXXXX5736</span></i></p>
+		  <p span id='from_time'>12 Aug 2022,03:55pm</span></p>
+		  </div>
+		  <div class="to">
+		  <i class='fa fa-wallet'style='float:right;color:#07e57d;font-size:25px'></i>
+	
+		  <h5>To</h5>
+		  <h4 id='to_name'>Saurabh Sharma</h4>
+		  <p class='white'><i id='to_account'>Growpital Wallet</i><p>
+		  <p class='white'><i>Ref.NO <span id='to_referenceno'> DBTR/222201998174</span></i></p>
+		  <p id='to_time'>12 Aug 2022,03:55pm</p>
+		  </div>
+		  <div class="method"></div>
+		  <p class='white'><b>Payment Method:</b><span id='pay_method'>UPI<span><P>
+		  <p class='white'><b>Transaction ID:</b><span id='trans_id'>DBTR/222201998174</span> <i class="fa fa-copy" style="font-size:20px;color:#bb9035;padding:0px 10px;transform: scaleX(-1);"></i></p>
+		  </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default help_button" >Help</button>
+		   <button type="button" class="btn btn-default share ">Share</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+</div>
+<script>
+function format_date(date){
+  const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+  let d = new Date(date);
+  let month_name = month[d.getMonth()];
+  const yyyy = d.getFullYear();
+  let dd = d.getDate();
+  let time = d.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+  return formattedToday = dd + ' ' + month_name + ' ' + yyyy + ' ' + time;
+}
+
+
+let transaction_data_string='{"AccountName":"Current Account","BankBalance":"XXXXX","transactionamount":15000,"transactiondate":"2022-08-12 15:55","PaymentType":{"Id":"X","Name":"Bank to Wallet Transfer"},"paymentmethod":"UPI","transactionId":"DBTR/222201998174","senderDetails":{"sender":"Saurabh Sharma","bank":"SBI","IFSC":"SBIN016095","accountno":"XXXXXXXXX5736","transactiondate":"2022-08-12 15:55"},"recieverDetails":{"reciever":"Saurabh Sharma","wallet":"Growpital Wallet","referenceno":"DBTR/222201998174","transactiondate":"2022-08-12 15:55"}}';
+//transaction_data_string='{"AccountName":"Current Account","BankBalance":"XXXXX","transactionamount":55500,"transactiondate":"2032-04-14 2:15","PaymentType":{"Id":"X","Name":"Bank to Wallet Transfer"},"paymentmethod":"UPIt","transactionId":"DTR/2201998174","senderDetails":{"sender":"Saur Sharma","bank":"SBIii","IFSC":"SB6095","accountno":"X","transactiondate":"2024-08-12 15:55"},"recieverDetails":{"reciever":"Saur Sharma","wallet":"Gro Wallet","referenceno":"DB/222201998174","transactiondate":"2045-08-14 15:55"}}';
+let transaction_data=JSON.parse(transaction_data_string);
+console.log(transaction_data);
+document.getElementById('transactionamount').innerHTML=transaction_data.transactionamount;
+document.getElementById('date_top').innerHTML=format_date(transaction_data.transactiondate);
+document.getElementById('pay_method').innerHTML=transaction_data.paymentmethod;
+document.getElementById('trans_id').innerHTML=transaction_data.transactionId;
+
+document.getElementById('from_name').innerHTML=transaction_data.senderDetails.sender;
+document.getElementById('bank_from').innerHTML=transaction_data.senderDetails.bank;
+document.getElementById('acc_no').innerHTML=transaction_data.senderDetails.accountno;
+document.getElementById('from_time').innerHTML= format_date(transaction_data.senderDetails.transactiondate);
+
+document.getElementById('to_name').innerHTML=transaction_data.recieverDetails.reciever;
+document.getElementById('to_account').innerHTML=transaction_data.recieverDetails.wallet;
+document.getElementById('to_referenceno').innerHTML=transaction_data.recieverDetails.referenceno;
+document.getElementById('to_time').innerHTML= format_date(transaction_data.recieverDetails.transactiondate);
+
+document.getElementById('ifsc_from').innerHTML=transaction_data.senderDetails.IFSC;
+</script>
+
+</body>
+</html>
